@@ -1,0 +1,20 @@
+<html>
+<head>
+<title>{{ title }}</title>
+</head>
+<body>
+<h1>{{ title }}</h1>
+<div>
+{% for beverage in kitchen.beverages %}
+<h2>{{ beverage }} queue:</h2>
+  <ol>
+  {% for brew in kitchen.beverage_queue(beverage) %}
+    <li>{{ brew.person }} : {{ brew.status }}</li>
+  {% else %}
+    <li><em>Nothing brewing.</em></li>
+  {% endfor %}
+  </ol>
+{% endfor %}
+</div>
+</body>
+</html>
