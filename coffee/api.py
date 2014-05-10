@@ -143,6 +143,3 @@ def api_v1_status(person):
 
 
 kitchen = Kitchen()
-
-if __name__ == "__main__":
-    app.run(debug=True)
