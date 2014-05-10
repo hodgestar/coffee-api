@@ -11,6 +11,7 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+An API for virtual coffee!
 
 
 Indices and tables
