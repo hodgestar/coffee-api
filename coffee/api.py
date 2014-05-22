@@ -25,9 +25,10 @@ class Brewable(object):
     BREWING = "brewing"
     READY = "ready"
 
-    def __init__(self, beverage, person):
+    def __init__(self, beverage, person, subtype=None):
         self.beverage = beverage
         self.person = person
+        self.subtype = subtype
         self.created_at = time_ms()
         self.brewing_at = None
         self.ready_at = None
@@ -57,7 +58,10 @@ class Brewable(object):
             raise KitchenError("Invalid beverage %r" % (beverage,))
         person = data.get("person")
         if not isinstance(person, unicode):
-            raise Kitchen("Invalid person %r" % (person,))
+            raise KitchenError("Invalid person %r" % (person,))
+        subtype = data.get("subtype", None)
+        if not (isinstance(subtype, unicode) or subtype is None):
+            raise KitchenError("Invalid subtype %s" % (subtype,))
         return cls(beverage, person)
 
     def to_dict(self):
@@ -65,6 +69,7 @@ class Brewable(object):
             "beverage": self.beverage,
             "person": self.person,
             "status": self.status,
+            "subtype": self.subtype,
         }
 
 
@@ -125,11 +130,14 @@ def index():
 
 
 @app.route('/api/v1/person/<person>/brew/<beverage>', methods=['POST'])
-def api_v1_brew(person, beverage):
+def api_v1_brew(person, beverage, subtype=None):
+    data = request.get_json(silent=True)
+    data = data if data is not None else None
     try:
         brewable = kitchen.brew({
             "person": person,
             "beverage": beverage,
+            "subtype": data.get("subtype", None),
         })
     except KitchenError:
         abort(400)
