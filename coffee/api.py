@@ -132,7 +132,7 @@ def index():
 @app.route('/api/v1/person/<person>/brew/<beverage>', methods=['POST'])
 def api_v1_brew(person, beverage, subtype=None):
     try:
-        data = request.json()
+        data = request.json or {}
     except:
         data = {}
     try:
