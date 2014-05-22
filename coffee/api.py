@@ -131,8 +131,10 @@ def index():
 
 @app.route('/api/v1/person/<person>/brew/<beverage>', methods=['POST'])
 def api_v1_brew(person, beverage, subtype=None):
-    data = request.get_json(silent=True)
-    data = data if data is not None else None
+    try:
+        data = request.json()
+    except:
+        data = {}
     try:
         brewable = kitchen.brew({
             "person": person,
