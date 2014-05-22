@@ -62,7 +62,7 @@ class Brewable(object):
         subtype = data.get("subtype", None)
         if not (isinstance(subtype, unicode) or subtype is None):
             raise KitchenError("Invalid subtype %s" % (subtype,))
-        return cls(beverage, person)
+        return cls(beverage, person, subtype=subtype)
 
     def to_dict(self):
         return {

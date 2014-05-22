@@ -2,8 +2,9 @@
 """
 
 import unittest
+import json
 
-from coffee.api import app, Kitchen, Brewable
+from coffee.api import app, Kitchen, Brewable, kitchen
 
 
 class KitchenTestCase(unittest.TestCase):
@@ -29,6 +30,7 @@ class BrewableTestCase(unittest.TestCase):
 class AppTestCase(unittest.TestCase):
 
     def setUp(self):
+        kitchen.__init__()
         self.app = app.test_client()
 
     def tearDown(self):
@@ -40,3 +42,28 @@ class AppTestCase(unittest.TestCase):
         assert "<h2>coffee queue:</h2>" in rv.data
         assert "<h2>tea queue:</h2>" in rv.data
         assert "Nothing brewing." in rv.data
+
+    def test_v1_brew(self):
+        rv = self.app.post('/api/v1/person/me/brew/coffee')
+        assert json.loads(rv.data) == {
+            "brew": {
+                "beverage": "coffee",
+                "person": "me",
+                "status": "brewing",
+                "subtype": None,
+            }
+        }
+
+    def test_v1_brew_subtype(self):
+        rv = self.app.post(
+            '/api/v1/person/me/brew/coffee',
+            data=json.dumps({"subtype": "mocha"}),
+            content_type="application/json")
+        assert json.loads(rv.data) == {
+            "brew": {
+                "beverage": "coffee",
+                "person": "me",
+                "status": "brewing",
+                "subtype": "mocha",
+            }
+        }
