@@ -17,7 +17,7 @@ setup(
         'MarkupSafe==0.19',
         'Werkzeug==0.9.4',
         'argparse==1.2.1',
-        'gunicorn==18.0',
+        'gunicorn==19.5.0',
         'itsdangerous==0.23',
         'wsgiref==0.1.2',
     ],
