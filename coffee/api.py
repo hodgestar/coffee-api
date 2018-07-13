@@ -133,7 +133,7 @@ def index():
 def api_v1_brew(person, beverage, subtype=None):
     try:
         data = request.json or {}
-    except:
+    except Exception:
         data = {}
     try:
         brewable = kitchen.brew({
