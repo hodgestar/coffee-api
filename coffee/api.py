@@ -99,7 +99,7 @@ class Kitchen(object):
 
     def brewables(self, person):
         brewables = []
-        for queue in self._queues.itervalues():
+        for queue in self._queues.values():
             items = [b for b in queue if b.person == person]
             for b in items:
                 if b.ready:
@@ -118,6 +118,19 @@ class Kitchen(object):
         brewable.set_times(brewing_at, ready_at)
         queue.append(brewable)
         return brewable
+
+    def cancel(self, person):
+        cancelled = []
+        for queue in self._queues.values():
+            items = [b for b in queue if b.person == person]
+            for b in items:
+                if b.ready:
+                    queue.remove(b)
+            cancelled.extend(items)
+            for b in items:
+                queue.remove(b)
+        cancelled.sort(key=lambda b: b.ready_at)
+        return cancelled
 
 
 @app.route('/')
@@ -144,6 +157,12 @@ def api_v1_brew(person, beverage, subtype=None):
     except KitchenError:
         abort(400)
     return jsonify(brew=brewable.to_dict()), 201
+
+
+@app.route('/api/v1/person/<person>/cancel', methods=['POST'])
+def api_v1_cancel(person):
+    cancelled = kitchen.cancel(person)
+    return jsonify(cancelled=[brew.to_dict() for brew in cancelled]), 200
 
 
 @app.route('/api/v1/person/<person>/status', methods=['GET'])

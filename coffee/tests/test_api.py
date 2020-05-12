@@ -67,3 +67,38 @@ class AppTestCase(unittest.TestCase):
                 "subtype": "mocha",
             }
         }
+
+    def test_v1_cancel_empty_queue(self):
+        rv = self.app.post('/api/v1/person/me/cancel')
+        assert json.loads(rv.data) == {
+            "cancelled": [],
+        }
+
+    def test_v1_cancel_queue_with_brewables(self):
+        kitchen.brew({"person": "me", "beverage": "coffee"})
+        kitchen.brew({"person": "me", "beverage": "coffee"})
+        kitchen.brew({"person": "me", "beverage": "tea"})
+        rv = self.app.post('/api/v1/person/me/cancel')
+        assert json.loads(rv.data) == {
+            "cancelled": [
+                {
+                    "beverage": "coffee",
+                    "person": "me",
+                    "status": "brewing",
+                    "subtype": None,
+                },
+                {
+                    "beverage": "coffee",
+                    "person": "me",
+                    "status": "waiting",
+                    "subtype": None,
+                },
+                {
+                    "beverage": "tea",
+                    "person": "me",
+                    "status": "brewing",
+                    "subtype": None,
+                },
+            ],
+        }
+        assert kitchen.brewables("me") == []
