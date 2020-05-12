@@ -54,13 +54,13 @@ class Brewable(object):
     @classmethod
     def from_dict(cls, data):
         beverage = data.get("beverage")
-        if not isinstance(beverage, unicode):
+        if not isinstance(beverage, str):
             raise KitchenError("Invalid beverage %r" % (beverage,))
         person = data.get("person")
-        if not isinstance(person, unicode):
+        if not isinstance(person, str):
             raise KitchenError("Invalid person %r" % (person,))
         subtype = data.get("subtype", None)
-        if not (isinstance(subtype, unicode) or subtype is None):
+        if not (isinstance(subtype, str) or subtype is None):
             raise KitchenError("Invalid subtype %s" % (subtype,))
         return cls(beverage, person, subtype=subtype)
 
