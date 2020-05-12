@@ -32,3 +32,16 @@ Retrieve the status of your beverages using::
   }
 
 Once a beverage is ready it'll disappear from the queue.
+
+Cancel all of your brews that aren't ready with::
+
+  $ curl http://powerful-sierra-2165.herokuapp.com/api/v1/person/simon/cancel
+  {
+    "cancelled": [
+      {
+        "beverage": "coffee",
+        "person": "simon",
+        "status": "cancelled"
+      }
+    ]
+  }
