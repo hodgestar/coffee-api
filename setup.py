@@ -12,14 +12,8 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
-        'Flask==0.10.1',
-        'Jinja2==2.7.2',
-        'MarkupSafe==0.19',
-        'Werkzeug==0.9.4',
-        'argparse==1.2.1',
-        'gunicorn==19.5.0',
-        'itsdangerous==0.23',
-        'wsgiref==0.1.2',
+        'Flask==1.1.2',
+        'gunicorn==20.0.4',
     ],
     classifiers=[
         'Development Status :: 4 - Beta',
@@ -27,5 +21,6 @@ setup(
         'License :: OSI Approved :: BSD License',
         'Operating System :: POSIX',
         'Programming Language :: Python',
+        'Programming Language :: Python:: 3',
     ],
 )

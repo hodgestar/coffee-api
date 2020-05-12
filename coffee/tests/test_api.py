@@ -38,10 +38,10 @@ class AppTestCase(unittest.TestCase):
 
     def test_index(self):
         rv = self.app.get('/')
-        assert "<title>Coffee API v1.0</title>" in rv.data
-        assert "<h2>coffee queue:</h2>" in rv.data
-        assert "<h2>tea queue:</h2>" in rv.data
-        assert "Nothing brewing." in rv.data
+        assert b"<title>Coffee API v1.0</title>" in rv.data
+        assert b"<h2>coffee queue:</h2>" in rv.data
+        assert b"<h2>tea queue:</h2>" in rv.data
+        assert b"Nothing brewing." in rv.data
 
     def test_v1_brew(self):
         rv = self.app.post('/api/v1/person/me/brew/coffee')
