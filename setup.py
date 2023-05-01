@@ -12,7 +12,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
-        'Flask==1.1.2',
+        'Flask==2.3.2',
         'gunicorn==20.0.4',
     ],
     classifiers=[
