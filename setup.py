@@ -13,7 +13,7 @@ setup(
     include_package_data=True,
     install_requires=[
         'Flask==2.3.2',
-        'gunicorn==22.0.0',
+        'gunicorn==23.0.0',
     ],
     classifiers=[
         'Development Status :: 4 - Beta',
